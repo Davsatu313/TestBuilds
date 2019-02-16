@@ -17,10 +17,10 @@ protected:
 
 private:
 	FVector targetLocation;
-
+	//*Actor where supose to be teleported*//
 	UPROPERTY(EditAnywhere)
 		AActor* target;
-
+	//*Teleporting logic when overlap happends*//
 	UFUNCTION()
 		void OnOverlap(AActor *me, AActor * other);
 };

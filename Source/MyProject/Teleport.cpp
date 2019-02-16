@@ -21,7 +21,8 @@ void ATeleport::BeginPlay()
 void ATeleport::OnOverlap(AActor * me, AActor * other)
 {
 	AMyProjectCharacter *player = Cast<AMyProjectCharacter>(other);
-	if (player != nullptr) {
+	//check if there is a target to hangle errors
+	if (player != nullptr && target != nullptr) {
 		player->SetActorLocation(targetLocation);
 	}
 }

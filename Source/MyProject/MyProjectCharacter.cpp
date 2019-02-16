@@ -12,9 +12,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "EnemyTestCharacter.h"
 #include "Point.h"
-
 #include "PlayerCameraShake.h"
-
 #include "Engine/World.h"
 #include "MyProjectGameMode.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,9 +25,6 @@
 
 AMyProjectCharacter::AMyProjectCharacter()
 {
-	//Camera shake
-	//myShake = new UPlayerCameraShake();
-
 	//pause flag
 	onPause = true;
 	currTime = 0;	
@@ -98,16 +93,10 @@ void AMyProjectCharacter::BeginPlay()
 	OnActorEndOverlap.AddDynamic(this, &AMyProjectCharacter::EndOverlap);
 	//Get world()
 	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-
+	//set camera variables
 	CameraBoom->bAbsoluteLocation = isFixedCamera; //Don't want arm to move, is fixed camera
-
-
-	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
 	gameMode->angle = cameraAngle;
 	gameMode->distance = cameraLengthToPlayer;	
-	/*if (GetWorld() != nullptr) {
-		UGameplayStatics::SetGamePaused(GetWorld(), onPause);
-	}*/
 }
 
 void AMyProjectCharacter::Tick(float deltaTime)
@@ -121,8 +110,6 @@ void AMyProjectCharacter::Tick(float deltaTime)
 		}
 	}
 		
-
-	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
 	if (gameMode->gameState != PLAYING && onPause == false) {
 		onPause = true;
 		UGameplayStatics::SetGamePaused(GetWorld(), onPause);

@@ -13,6 +13,11 @@ UCLASS()
 class MYPROJECT_API UUserHUD : public UUserWidget
 {
 	GENERATED_BODY()
+public:
+	//*Natve functions of UI*//
+	void NativeConstruct() override;
+	void NativeTick(const FGeometry& geometry, float InDeltaTime) override;
+
 private:
 	//*Game mode pointer*//
 	class AMyProjectGameMode* gameMode;
@@ -25,16 +30,6 @@ private:
 	class UTextBlock* EndGame;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* Restart;
-	
-	/*class APawn* pj;
-	class AMyProjectCharacter* crt;*/
-
 	//*Update UI functions*//
-	FText FloatToText(float angle);
-protected:
-public:
-	//*Natve functions of UI*//
-	void NativeConstruct() override;
-	void NativeTick(const FGeometry& geometry, float InDeltaTime) override;
-	
+	FText FloatToText(float angle);	
 };
