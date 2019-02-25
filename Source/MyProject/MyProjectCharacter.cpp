@@ -32,8 +32,8 @@ AMyProjectCharacter::AMyProjectCharacter()
 	canPickUp = false;
 	//Set the camera debug variables
 	isFixedCamera = false;
-	cameraAngle = -90.0f;
-	cameraLengthToPlayer = 1500.0f;
+	cameraAngle = -70.0f;
+	cameraLengthToPlayer = 600.0f;
 
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -70,12 +70,14 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 {
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMyProjectCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyProjectCharacter::MoveRight);
-	//Angles 
-	InputComponent->BindAction("IncreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::IncreaseAngle);
-	InputComponent->BindAction("DecreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::DecreaseAngle);
-	//Distance
-	InputComponent->BindAction("IncreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::IncreaseLenght);
-	InputComponent->BindAction("DecreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::DecreaseLenght);
+	/***********************************************
+	* //Angles 
+	* InputComponent->BindAction("IncreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::IncreaseAngle);
+	* InputComponent->BindAction("DecreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::DecreaseAngle);
+	* //Distance
+	* InputComponent->BindAction("IncreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::IncreaseLenght);
+	* InputComponent->BindAction("DecreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::DecreaseLenght);
+	***********************************************/
 	//Restart
 	FInputActionBinding& toggle= InputComponent->BindAction("RestartLevel", IE_Pressed, this, &AMyProjectCharacter::RestartLevel);
 	toggle.bExecuteWhenPaused = true;
