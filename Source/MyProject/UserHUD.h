@@ -22,10 +22,6 @@ private:
 	//*Game mode pointer*//
 	class AMyProjectGameMode* gameMode;
 	//*UI Elements*//
-	UPROPERTY(meta=(BindWidget))
-	class UTextBlock* AngleBlock;
-	UPROPERTY(meta=(BindWidget))
-	class UTextBlock* DistanceBlock;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* EndGame;
 	UPROPERTY(meta = (BindWidget))

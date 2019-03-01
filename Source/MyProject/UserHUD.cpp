@@ -14,8 +14,8 @@ void UUserHUD::NativeTick(const FGeometry & geometry, float InDeltaTime)
 	Super::NativeTick(geometry, InDeltaTime);
 
 	//set the text bloc games
-	DistanceBlock->SetText(FloatToText(gameMode->distance));
-	AngleBlock->SetText(FloatToText(gameMode->angle));
+	/*DistanceBlock->SetText(FloatToText(gameMode->distance));
+	AngleBlock->SetText(FloatToText(gameMode->angle));*/
 
 	if (gameMode->gameState != PLAYING) {
 		if (gameMode->gameState == WIN) {
