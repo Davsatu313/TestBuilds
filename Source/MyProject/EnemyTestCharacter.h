@@ -16,8 +16,8 @@ public:
 	AEnemyTestCharacter();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UPROPERTY(Editanywhere)
+		TSubclassOf<class UStaticMesh> visioncone;
 
 protected:
 	// Called when the game starts or when spawned
