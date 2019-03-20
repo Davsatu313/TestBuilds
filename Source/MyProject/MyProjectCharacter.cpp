@@ -70,14 +70,14 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 {
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMyProjectCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyProjectCharacter::MoveRight);
-	/***********************************************
-	* //Angles 
-	* InputComponent->BindAction("IncreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::IncreaseAngle);
-	* InputComponent->BindAction("DecreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::DecreaseAngle);
-	* //Distance
-	* InputComponent->BindAction("IncreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::IncreaseLenght);
-	* InputComponent->BindAction("DecreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::DecreaseLenght);
-	***********************************************/
+	
+	//Angles 
+	// InputComponent->BindAction("IncreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::IncreaseAngle);
+	// InputComponent->BindAction("DecreaseCameraAngle", IE_Released, this, &AMyProjectCharacter::DecreaseAngle);
+	//Distance
+	 InputComponent->BindAction("IncreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::IncreaseLenght);
+	 InputComponent->BindAction("DecreaseCameraDistance", IE_Released, this, &AMyProjectCharacter::DecreaseLenght);
+	/***********************************************/
 	//Restart
 	FInputActionBinding& toggle= InputComponent->BindAction("RestartLevel", IE_Pressed, this, &AMyProjectCharacter::RestartLevel);
 	toggle.bExecuteWhenPaused = true;
@@ -189,8 +189,8 @@ void AMyProjectCharacter::DecreaseLenght()
 		cameraLengthToPlayer -= 50;
 		CameraBoom->TargetArmLength = cameraLengthToPlayer;
 
-		gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-		gameMode->distance = cameraLengthToPlayer;
+		//gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
+		//gameMode->distance = cameraLengthToPlayer;
 	}
 }
 
@@ -201,8 +201,8 @@ void AMyProjectCharacter::IncreaseLenght()
 		cameraLengthToPlayer += 50;
 		CameraBoom->TargetArmLength = cameraLengthToPlayer;
 	
-		gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-		gameMode->distance = cameraLengthToPlayer;
+		//gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
+		//gameMode->distance = cameraLengthToPlayer;
 	}
 }
 
