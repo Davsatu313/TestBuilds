@@ -226,9 +226,9 @@ void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
 		canPickUp = true;
 		APoint *point = Cast<APoint>(other);
 		pickPoint = point;
-		if (myShake != NULL) {
+		/*if (myShake != NULL) {
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(myShake,1.0f);
-		}
+		}*/
 	}
 }
 void AMyProjectCharacter::EndOverlap(AActor * me, AActor * other)
