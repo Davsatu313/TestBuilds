@@ -32,14 +32,10 @@ void AMyProjectGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 }
-/*
+/* tick function
 void AMyProjectGameMode::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-	//Verify is are points 
-	if (pointsInLevel == 0) {
-		UE_LOG(LogTemp, Warning, TEXT("NO HAY PUNTOS \n"));
-	}
+
 }*/
 
 void AMyProjectGameMode::UpdateScore(float points) {
@@ -53,6 +49,11 @@ void AMyProjectGameMode::UpdatePoints(int state) {
 		gameState = WIN;
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("%d \n"), pointsInLevel);
+}
+
+int AMyProjectGameMode::GetPointsInLevel()
+{
+	return pointsInLevel;
 }
 
 

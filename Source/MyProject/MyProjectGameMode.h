@@ -25,6 +25,8 @@ public:
 	void UpdateScore(float points);	
 	//*If a point is spawned in the lvl update points variable*//
 	void UpdatePoints(int state);
+	//* Get the current points in level *//
+	int GetPointsInLevel();
 
 protected:
 	virtual void BeginPlay() override;

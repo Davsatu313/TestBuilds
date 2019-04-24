@@ -26,6 +26,17 @@ private:
 	class UTextBlock* EndGame;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* Restart;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* ItemsRemain;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* TotalItems;
+	//* variables *//
+	int totalPoints;
+	int currentPoints;
+	int pointsRemain;
 	//*Update UI functions*//
 	FText FloatToText(float angle);	
+	FText IntToText(int arg);
+	void SetFinalText();
+	void UpdatePoints();
 };

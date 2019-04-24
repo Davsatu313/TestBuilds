@@ -12,18 +12,10 @@
 void UUserHUD::NativeTick(const FGeometry & geometry, float InDeltaTime)
 {
 	Super::NativeTick(geometry, InDeltaTime);
-
 	//set the text bloc games
-
-	if (gameMode->gameState != PLAYING) {
-		if (gameMode->gameState == WIN) {
-			EndGame->SetText(FText::FromString("WIN"));
-		}
-		else {
-			EndGame->SetText(FText::FromString("LOSE"));
-		}
-		Restart->SetText(FText::FromString("PRESS SPACE BAR FOR RESTART"));
-	}
+	UpdatePoints();
+	SetFinalText();
+	
 
 }
 
@@ -34,7 +26,44 @@ FText UUserHUD::FloatToText(float parameter)
 	FText parameterText = FText::FromString(parameterString);
 	return parameterText;
 }
+//*convert a int type into a FText type for UI*//
+FText UUserHUD::IntToText(int parameter)
+{
+	FString parameterString = FString::FromInt(parameter);
+	FText parameterText = FText::FromString(parameterString);
+	return parameterText;
+}
 
+//set the final text on the screen
+void UUserHUD::SetFinalText()
+{
+	if (gameMode->gameState != PLAYING) {
+		//UpdatePoints();
+		if (gameMode->gameState == WIN) {
+			EndGame->SetText(FText::FromString("WIN"));
+		}
+		else {
+			EndGame->SetText(FText::FromString("LOSE"));
+		}
+		Restart->SetText(FText::FromString("PRESS SPACE BAR FOR RESTART"));		
+	}
+}
+
+void UUserHUD::UpdatePoints()
+{
+	currentPoints = totalPoints - gameMode->GetPointsInLevel();
+	//handle new points or thread points errors
+	if (currentPoints < 0) {
+		totalPoints = gameMode->GetPointsInLevel();
+		TotalItems->SetText(IntToText(totalPoints));
+		pointsRemain = totalPoints - gameMode->GetPointsInLevel();
+		ItemsRemain->SetText(IntToText(pointsRemain));
+	}
+	if (currentPoints - pointsRemain != 0) {
+		pointsRemain = currentPoints;
+		ItemsRemain->SetText(IntToText(pointsRemain));
+	}
+}
 
 void UUserHUD::NativeConstruct()
 {
@@ -45,5 +74,12 @@ void UUserHUD::NativeConstruct()
 	if (mode != nullptr) {
 		gameMode = Cast<AMyProjectGameMode>(mode);
 	}
-
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No game Mode \n"));
+	}
+	//set total points
+	totalPoints = gameMode->GetPointsInLevel();
+	TotalItems->SetText(IntToText(totalPoints));
+	pointsRemain = totalPoints - gameMode->GetPointsInLevel();
+	ItemsRemain->SetText(IntToText(pointsRemain));
 }
