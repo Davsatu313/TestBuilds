@@ -1,7 +1,7 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
 #include "MyProjectGameMode.h"
-#include "MyProjectCharacter.h"
+#include "MainCharacter/MyProjectCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/HUD.h"
 #define PLAYING 0
