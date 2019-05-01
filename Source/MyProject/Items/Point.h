@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/Interactectable.h"
 #include "Point.generated.h"
 
 UCLASS()
-class MYPROJECT_API APoint : public AActor
+class MYPROJECT_API APoint : public AActor, public IInteractectable
 {
 	GENERATED_BODY()
 	
@@ -26,4 +27,5 @@ private:
 	class AMyProjectGameMode *gameMode;
 	//*Tell game mode a point spawned *//
 	void SpawnedPoint();
+	void DoPlayerInteraction() override;
 };

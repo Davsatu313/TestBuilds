@@ -26,11 +26,12 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UCameraShake> myShake;
 	//Set posible can pic up something
-	bool onPause,canPickUp;
+	bool onPause,canInteract;
 	//Set the current time por the pause init
 	float currTime;
 	//Set the an item (Point) that can be pick up
 	class APoint* pickPoint;	
+	class IInteractectable* interactObject;
 	//*Game mode variable useful for all the world requirements*//
 	class AMyProjectGameMode *gameMode;
 	//* Returns CameraBoom subobject *//
@@ -58,7 +59,7 @@ private:
 	//* Restart game*//
 	void RestartLevel();
 	//*Pick up Item*//
-	void PickUp();
+	void Interact();
 	//*Overlap function, called when the actor ovelap something*//
 	UFUNCTION()
 		void OnOverlap(AActor * me, AActor * other);

@@ -1,0 +1,6 @@
+﻿
+Renamed 'PickUp' to 'Interact':
+-------------------------------
+C:\Users\David\Documents\Unreal Projects\TestBuilds\Source\MyProject\MainCharacter\MyProjectCharacter.cpp(85, 79)
+C:\Users\David\Documents\Unreal Projects\TestBuilds\Source\MyProject\MainCharacter\MyProjectCharacter.cpp(252, 27)
+C:\Users\David\Documents\Unreal Projects\TestBuilds\Source\MyProject\MainCharacter\MyProjectCharacter.h(61, 7)

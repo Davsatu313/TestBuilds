@@ -4,6 +4,8 @@
 #include "Engine/World.h"
 #include "MyProjectGameMode.h"
 #include "MainCharacter/MyProjectCharacter.h"
+#include "Interfaces/Interactectable.h"
+
 #define SPAWNED 1
 #define TAKEN -1
 // Sets default values
@@ -23,4 +25,12 @@ void APoint::BeginPlay()
 void APoint::SpawnedPoint() {
 	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
 	gameMode->UpdatePoints(SPAWNED);
+}
+
+void APoint::DoPlayerInteraction()
+{
+	gameMode->UpdateScore(points);
+	gameMode->UpdatePoints(TAKEN);
+	UE_LOG(LogTemp, Warning, TEXT("INTERACTING WITH ME \n"));
+	this->Destroy();
 }

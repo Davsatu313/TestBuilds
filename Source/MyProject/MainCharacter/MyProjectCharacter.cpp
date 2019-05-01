@@ -29,7 +29,7 @@ AMyProjectCharacter::AMyProjectCharacter()
 	onPause = true;
 	currTime = 0;	
 	//PickUp flag
-	canPickUp = false;
+	canInteract = false;
 	//Set the camera debug variables
 	isFixedCamera = false;
 	cameraAngle = -70.0f;
@@ -82,7 +82,7 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	FInputActionBinding& toggle= InputComponent->BindAction("RestartLevel", IE_Pressed, this, &AMyProjectCharacter::RestartLevel);
 	toggle.bExecuteWhenPaused = true;
 	//PickUp the items
-	InputComponent->BindAction("PickUp", IE_Pressed, this, &AMyProjectCharacter::PickUp);
+	InputComponent->BindAction("PickUp", IE_Pressed, this, &AMyProjectCharacter::Interact);
 	
 }
 
@@ -222,10 +222,12 @@ void AMyProjectCharacter::RestartLevel()
 
 void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
 {
-	if (Cast<APoint>(other) != nullptr ) {
-		canPickUp = true;
-		APoint *point = Cast<APoint>(other);
-		pickPoint = point;
+	if (Cast<IInteractectable>(other) != nullptr )
+	{
+		canInteract = true;
+		IInteractectable * interacting = Cast<IInteractectable>(other);
+		interactObject = interacting;
+		interacting = nullptr;
 		/*if (myShake != NULL) {
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(myShake,1.0f);
 		}*/
@@ -233,9 +235,11 @@ void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
 }
 void AMyProjectCharacter::EndOverlap(AActor * me, AActor * other)
 {
-	if (Cast<APoint>(other) != nullptr) {
-		canPickUp = false;
-		APoint *point = nullptr;
+	if (Cast<APoint>(other) != nullptr)
+	{
+		canInteract = false;
+		interactObject = nullptr;
+		//APoint *point = nullptr;
 	}
 }
 
@@ -248,11 +252,10 @@ void AMyProjectCharacter::OnHit(AActor* SelfActor, AActor* OtherActor, FVector N
 		gameMode->UpdatePoints(100);
 	}
 }
-void AMyProjectCharacter::PickUp() {
-	if (canPickUp && pickPoint != nullptr){
-		gameMode->UpdateScore(pickPoint->points);
-		gameMode->UpdatePoints(-1);
-		pickPoint->Destroy();
-		canPickUp = false;
+void AMyProjectCharacter::Interact() {
+	if (canInteract && interactObject != nullptr)
+	{
+		interactObject->DoPlayerInteraction();
 	}
+
 }
