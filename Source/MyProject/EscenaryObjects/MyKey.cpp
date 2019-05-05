@@ -1,6 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #include "MyKey.h"
+#include "Engine/World.h"
+#include "MyProjectGameMode.h"
+#include "Interfaces/Interactectable.h"
+
+#define TAKEN 1
+
 
 // Sets default values
 AMyKey::AMyKey()
@@ -13,6 +18,7 @@ AMyKey::AMyKey()
 // Called when the game starts or when spawned
 void AMyKey::BeginPlay()
 {
+	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
 	Super::BeginPlay();
 	
 }
@@ -22,5 +28,11 @@ void AMyKey::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyKey::DoPlayerInteraction()
+{
+	gameMode->SetRecolectedKeys(TAKEN);
+	this->Destroy();	
 }
 

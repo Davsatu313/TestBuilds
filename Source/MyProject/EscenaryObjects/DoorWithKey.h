@@ -13,5 +13,6 @@ UCLASS()
 class MYPROJECT_API ADoorWithKey : public AMyDoor
 {
 	GENERATED_BODY()
+	void DoPlayerInteraction() override;
 	
 };

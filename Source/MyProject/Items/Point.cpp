@@ -31,6 +31,5 @@ void APoint::DoPlayerInteraction()
 {
 	gameMode->UpdateScore(points);
 	gameMode->UpdatePoints(TAKEN);
-	UE_LOG(LogTemp, Warning, TEXT("INTERACTING WITH ME \n"));
 	this->Destroy();
 }

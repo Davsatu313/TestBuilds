@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+//#include "DoorWithSwitch.h"
 #include "MySwitch.generated.h"
+
+
 
 UCLASS()
 class MYPROJECT_API AMySwitch : public AActor
@@ -14,13 +17,15 @@ class MYPROJECT_API AMySwitch : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMySwitch();
-
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION()
+	void OnOverlap(AActor * me, AActor * other);
 
+	UPROPERTY(Editanywhere)
+		class ADoorWithSwitch * myDoor;
 };

@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/Interactectable.h"
 #include "MyDoor.generated.h"
 
 UCLASS()
-class MYPROJECT_API AMyDoor : public AActor
+class MYPROJECT_API AMyDoor : public AActor, public IInteractectable
 {
 	GENERATED_BODY()
 	
@@ -18,9 +19,21 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	class AMyProjectGameMode *gameMode;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	//interaction with player
+	void DoPlayerInteraction() override;
+
+	UPROPERTY(EditAnywhere)
+		float downVelocity;
+	UPROPERTY(EditAnywhere)
+		float deletePosition;
+
+	bool move;
+private:
+	
 
 };

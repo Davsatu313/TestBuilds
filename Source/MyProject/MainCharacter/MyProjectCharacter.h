@@ -29,8 +29,7 @@ public:
 	bool onPause,canInteract;
 	//Set the current time por the pause init
 	float currTime;
-	//Set the an item (Point) that can be pick up
-	class APoint* pickPoint;	
+	//Set the object that implements the interect functions
 	class IInteractectable* interactObject;
 	//*Game mode variable useful for all the world requirements*//
 	class AMyProjectGameMode *gameMode;

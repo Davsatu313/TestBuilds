@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/Interactectable.h"
 #include "MyKey.generated.h"
 
+
 UCLASS()
-class MYPROJECT_API AMyKey : public AActor
+class MYPROJECT_API AMyKey : public AActor,  public IInteractectable
 {
 	GENERATED_BODY()
 	
@@ -18,9 +20,12 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	class AMyProjectGameMode *gameMode;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	//interaction with player
+	void DoPlayerInteraction() override;
 
 };

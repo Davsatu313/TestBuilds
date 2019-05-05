@@ -19,6 +19,8 @@ AMyProjectGameMode::AMyProjectGameMode()
 
 	pointsInLevel = 0;
 	score = 0.f;
+	keys = 0;
+
 	gameState = PLAYING;
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPersonCPP/Blueprints/ProjectCharacterBP"));
@@ -54,6 +56,16 @@ void AMyProjectGameMode::UpdatePoints(int state) {
 int AMyProjectGameMode::GetPointsInLevel()
 {
 	return pointsInLevel;
+}
+
+void AMyProjectGameMode::SetRecolectedKeys(int arg)
+{
+	keys += arg;
+}
+
+int AMyProjectGameMode::GetRecolectedKeys()
+{
+	return keys;
 }
 
 

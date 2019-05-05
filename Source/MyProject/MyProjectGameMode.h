@@ -27,6 +27,9 @@ public:
 	void UpdatePoints(int state);
 	//* Get the current points in level *//
 	int GetPointsInLevel();
+	//*set the key value*//
+	void SetRecolectedKeys(int arg);
+	int GetRecolectedKeys();
 
 protected:
 	virtual void BeginPlay() override;
@@ -36,4 +39,6 @@ private:
 	int pointsInLevel;
 	//*The game score *//
 	float score;
+	//*the keys in level every key can open every door*//
+	int keys;
 };

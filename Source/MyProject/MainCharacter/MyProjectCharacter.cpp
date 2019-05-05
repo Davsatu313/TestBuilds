@@ -188,9 +188,6 @@ void AMyProjectCharacter::DecreaseLenght()
 	{
 		cameraLengthToPlayer -= 50;
 		CameraBoom->TargetArmLength = cameraLengthToPlayer;
-
-		//gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-		//gameMode->distance = cameraLengthToPlayer;
 	}
 }
 
@@ -200,9 +197,6 @@ void AMyProjectCharacter::IncreaseLenght()
 	{
 		cameraLengthToPlayer += 50;
 		CameraBoom->TargetArmLength = cameraLengthToPlayer;
-	
-		//gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-		//gameMode->distance = cameraLengthToPlayer;
 	}
 }
 
@@ -235,11 +229,10 @@ void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
 }
 void AMyProjectCharacter::EndOverlap(AActor * me, AActor * other)
 {
-	if (Cast<APoint>(other) != nullptr)
+	if (Cast<IInteractectable>(other) != nullptr)
 	{
 		canInteract = false;
 		interactObject = nullptr;
-		//APoint *point = nullptr;
 	}
 }
 

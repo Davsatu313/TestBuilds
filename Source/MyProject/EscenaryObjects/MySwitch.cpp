@@ -1,26 +1,38 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MySwitch.h"
+#include "Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Materials/Material.h"
+#include "Engine/StaticMesh.h"
+#include "DoorWithSwitch.h"
+#define OFF 1
+#define ON -1
 
 // Sets default values
 AMySwitch::AMySwitch()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	
 
 }
 
-// Called when the game starts or when spawned
+void AMySwitch::OnOverlap(AActor * me, AActor * other)
+{
+	if (myDoor != nullptr) {
+		myDoor->setActiveSwitch(ON);
+		this->Destroy();
+	}
+
+}
+
 void AMySwitch::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	OnActorBeginOverlap.AddDynamic(this,&AMySwitch::OnOverlap);
+	if (myDoor != nullptr) {
+		myDoor->setnumSwitch(OFF);
+	}
+	else
+	{
+		this->Destroy();
+	}
 }
-
-// Called every frame
-void AMySwitch::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
