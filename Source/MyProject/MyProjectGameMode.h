@@ -18,7 +18,8 @@ public:
 	//*current camera distance to player*//
 	float distance;
 	//*current game state*//
-	int gameState;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int actualGameState;
 	//*tick function called every frame *//
 	//virtual void Tick(float DeltaTime) override;	
 	//*Update the general Score*//

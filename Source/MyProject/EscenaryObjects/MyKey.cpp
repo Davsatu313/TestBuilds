@@ -32,6 +32,7 @@ void AMyKey::Tick(float DeltaTime)
 
 void AMyKey::DoPlayerInteraction()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Cogiendo la llavesita prro \n"));
 	gameMode->SetRecolectedKeys(TAKEN);
 	this->Destroy();	
 }

@@ -4,6 +4,8 @@
 #include "MainCharacter/MyProjectCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/HUD.h"
+#include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 #define PLAYING 0
 #define WIN 1
 #define LOSE -1
@@ -21,7 +23,7 @@ AMyProjectGameMode::AMyProjectGameMode()
 	score = 0.f;
 	keys = 0;
 
-	gameState = PLAYING;
+	actualGameState = PLAYING;
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPersonCPP/Blueprints/ProjectCharacterBP"));
 	if (PlayerPawnBPClass.Class != NULL)
@@ -47,8 +49,10 @@ void AMyProjectGameMode::UpdateScore(float points) {
 
 void AMyProjectGameMode::UpdatePoints(int state) {
 	pointsInLevel += state;
-	if (pointsInLevel <= 0) {
-		gameState = WIN;
+	if (pointsInLevel <= 0) 
+	{
+		actualGameState = WIN;
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("%d \n"), pointsInLevel);
 }

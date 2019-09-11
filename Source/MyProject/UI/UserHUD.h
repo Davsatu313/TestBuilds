@@ -30,6 +30,8 @@ private:
 	class UTextBlock* ItemsRemain;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* TotalItems;
+	//UPROPERTY(meta = (BindWidget))
+	//class UTextBlock* PickWait;
 	//* variables *//
 	int totalPoints;
 	int currentPoints;

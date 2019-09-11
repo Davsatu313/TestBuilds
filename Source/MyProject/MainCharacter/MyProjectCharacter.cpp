@@ -12,11 +12,13 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Enemies/EnemyTestCharacter.h"
 #include "Items/Point.h"
+#include "EscenaryObjects/MyDoor.h"
 #include "PlayerCameraShake.h"
 #include "Engine/World.h"
 #include "MyProjectGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
+#define TIMERCALLING 0.1f
 #define PLAYING 0
 #define WIN 1
 #define LOSE -1
@@ -34,6 +36,10 @@ AMyProjectCharacter::AMyProjectCharacter()
 	isFixedCamera = false;
 	cameraAngle = -70.0f;
 	cameraLengthToPlayer = 600.0f;
+	//collec default time
+	timeToCollet = 2.0f;
+	canPick = false;
+	timerCalls = 0.0f;
 
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -83,6 +89,7 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	toggle.bExecuteWhenPaused = true;
 	//PickUp the items
 	InputComponent->BindAction("PickUp", IE_Pressed, this, &AMyProjectCharacter::Interact);
+	InputComponent->BindAction("PickUp", IE_Released, this, &AMyProjectCharacter::StopInteract);
 	
 }
 
@@ -104,18 +111,32 @@ void AMyProjectCharacter::BeginPlay()
 void AMyProjectCharacter::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
-	if (onPause) {
+
+	
+	if (canPick && canInteract)
+	{
+		timerCalls += deltaTime;
+		if (timerCalls >= timeToCollet)
+		{
+			Pick();
+			timerCalls = 0.0f;
+		}
+	}
+	
+	/*if (onPause) {
 		/*currTime += deltaTime;
-		UE_LOG(LogTemp, Warning, TEXT("%f \n"), currTime);*/
-		if (GetWorld() != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("%f \n"), currTime);
+		
+	if (GetWorld() != nullptr) {
 			UGameplayStatics::SetGamePaused(GetWorld(), onPause);
 		}
 	}
-		
+	
 	if (gameMode->gameState != PLAYING && onPause == false) {
 		onPause = true;
 		UGameplayStatics::SetGamePaused(GetWorld(), onPause);
 	}
+	*/
 	
 }
 
@@ -203,15 +224,16 @@ void AMyProjectCharacter::IncreaseLenght()
 void AMyProjectCharacter::RestartLevel()
 {
 	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-	if (gameMode->gameState != PLAYING) {
+	if (gameMode->actualGameState != PLAYING) {
 		GetWorld()->ServerTravel("/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap");				
 	}
 
 	//set pause end		
+	/*
 	if (onPause == true) {
 		UGameplayStatics::SetGamePaused(GetWorld(),false);
 		onPause = false;
-	}
+	}*/
 }
 
 void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
@@ -241,14 +263,46 @@ void AMyProjectCharacter::OnHit(AActor* SelfActor, AActor* OtherActor, FVector N
 	AEnemyTestCharacter *overalpObject = Cast<AEnemyTestCharacter>(OtherActor);
 	if (overalpObject != nullptr) {
 		gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
-		gameMode->gameState = LOSE;
-		gameMode->UpdatePoints(100);
+		gameMode->actualGameState = LOSE;
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		//gameMode->UpdatePoints(100);
 	}
 }
-void AMyProjectCharacter::Interact() {
-	if (canInteract && interactObject != nullptr)
+void AMyProjectCharacter::Interact() 
+{
+	
+	UE_LOG(LogTemp, Warning, TEXT("Acabo de oprimir prro \n"));
+	
+	canPick = true;
+	AMyDoor * someDoor = Cast<AMyDoor>(interactObject);
+
+	if (canInteract && (interactObject != nullptr && someDoor != nullptr  ) )
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Definitivamente es una puerta \n"));
+		interactObject->DoPlayerInteraction();
+	}
+	else if (canInteract && (interactObject != nullptr || someDoor == nullptr))
+	{
+		/*Hacer el timer*/
+		UE_LOG(LogTemp, Warning, TEXT("Definitivamente no es una puerta \n"));
+		canPick = true;
+	}
+
+}
+
+void AMyProjectCharacter::StopInteract()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Acabo de soltar prro \n"));
+	canPick = false;
+	timerCalls = 0.0f;
+}
+
+void AMyProjectCharacter::Pick()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Voy a coger algo prro \n"));
+	if (canPick && canInteract && interactObject != nullptr)
 	{
 		interactObject->DoPlayerInteraction();
 	}
-
+	
 }

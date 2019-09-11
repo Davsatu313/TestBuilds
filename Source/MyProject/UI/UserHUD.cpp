@@ -37,9 +37,9 @@ FText UUserHUD::IntToText(int parameter)
 //set the final text on the screen
 void UUserHUD::SetFinalText()
 {
-	if (gameMode->gameState != PLAYING) {
+	if (gameMode->actualGameState != PLAYING) {
 		//UpdatePoints();
-		if (gameMode->gameState == WIN) {
+		if (gameMode->actualGameState == WIN) {
 			EndGame->SetText(FText::FromString("WIN"));
 		}
 		else {

@@ -25,6 +25,11 @@ public:
 	//instance of camera shake
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UCameraShake> myShake;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float timeToCollet;
+	//*Count the times that a timer is called*//
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float timerCalls;
 	//Set posible can pic up something
 	bool onPause,canInteract;
 	//Set the current time por the pause init
@@ -57,8 +62,14 @@ private:
 	void IncreaseLenght();
 	//* Restart game*//
 	void RestartLevel();
-	//*Pick up Item*//
+	//*Interact with some Item*//
 	void Interact();
+	//*Stop interact with some Item*//
+	void StopInteract();
+	//*Pick if can*//
+	void Pick();
+	//*check if the interact key is pressed *//
+	bool canPick;
 	//*Overlap function, called when the actor ovelap something*//
 	UFUNCTION()
 		void OnOverlap(AActor * me, AActor * other);
