@@ -55,7 +55,7 @@ void UUserHUD::UpdatePoints()
 	//handle new points or thread points errors
 	if (currentPoints < 0) {
 		totalPoints = gameMode->GetPointsInLevel();
-		TotalItems->SetText(IntToText(totalPoints));
+		TotalItemsTest->SetText(IntToText(totalPoints));
 		pointsRemain = totalPoints - gameMode->GetPointsInLevel();
 		ItemsRemain->SetText(IntToText(pointsRemain));
 	}
@@ -79,7 +79,7 @@ void UUserHUD::NativeConstruct()
 	}
 	//set total points
 	totalPoints = gameMode->GetPointsInLevel();
-	TotalItems->SetText(IntToText(totalPoints));
+	TotalItemsTest->SetText(IntToText(totalPoints));
 	pointsRemain = totalPoints - gameMode->GetPointsInLevel();
 	ItemsRemain->SetText(IntToText(pointsRemain));
 }

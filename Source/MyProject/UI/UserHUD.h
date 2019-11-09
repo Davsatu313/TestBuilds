@@ -29,7 +29,7 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* ItemsRemain;
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* TotalItems;
+	class UTextBlock* TotalItemsTest;
 	//UPROPERTY(meta = (BindWidget))
 	//class UTextBlock* PickWait;
 	//* variables *//
