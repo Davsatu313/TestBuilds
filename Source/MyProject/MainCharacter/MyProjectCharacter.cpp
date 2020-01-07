@@ -40,6 +40,8 @@ AMyProjectCharacter::AMyProjectCharacter()
 	timeToCollet = 2.0f;
 	canPick = false;
 	timerCalls = 0.0f;
+	//block variables
+	blockDistanceFromThePlayer = 100.0f;
 
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -68,6 +70,7 @@ AMyProjectCharacter::AMyProjectCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
 }
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -88,6 +91,8 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	FInputActionBinding& toggle= InputComponent->BindAction("RestartLevel", IE_Pressed, this, &AMyProjectCharacter::RestartLevel);
 	toggle.bExecuteWhenPaused = true;
 	//PickUp the items
+	InputComponent->BindAction("PutBlock", IE_Pressed, this, &AMyProjectCharacter::PutBlock);
+
 	InputComponent->BindAction("PickUp", IE_Pressed, this, &AMyProjectCharacter::Interact);
 	InputComponent->BindAction("PickUp", IE_Released, this, &AMyProjectCharacter::StopInteract);
 	
@@ -271,35 +276,52 @@ void AMyProjectCharacter::OnHit(AActor* SelfActor, AActor* OtherActor, FVector N
 void AMyProjectCharacter::Interact() 
 {
 	
-	UE_LOG(LogTemp, Warning, TEXT("Acabo de oprimir prro \n"));
-	
 	canPick = true;
 	AMyDoor * someDoor = Cast<AMyDoor>(interactObject);
 
 	if (canInteract && (interactObject != nullptr && someDoor != nullptr  ) )
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Definitivamente es una puerta \n"));
 		interactObject->DoPlayerInteraction();
 	}
 	else if (canInteract && (interactObject != nullptr || someDoor == nullptr))
 	{
-		/*Hacer el timer*/
-		UE_LOG(LogTemp, Warning, TEXT("Definitivamente no es una puerta \n"));
 		canPick = true;
 	}
 
 }
 
+void AMyProjectCharacter::PutBlock() 
+{
+	if (blockToSpawn != nullptr )
+	{
+		const FRotator actorRotation = GetActorRotation();
+		const FVector  actorPosition = GetActorLocation();
+		const FVector  forwarVector = GetActorForwardVector() * blockDistanceFromThePlayer;
+		const FVector  blockPosition = actorPosition + forwarVector;
+
+		if (currentBlock == nullptr)
+		{
+			currentBlock = GetWorld()->SpawnActor<ABlock>(blockToSpawn, blockPosition, actorRotation);
+			return;
+		}
+		currentBlock->SetActorLocation(blockPosition);
+		currentBlock->SetActorRotation(actorRotation);
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("NOT BLOCK"));
+	}
+
+}
 void AMyProjectCharacter::StopInteract()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Acabo de soltar prro \n"));
 	canPick = false;
 	timerCalls = 0.0f;
 }
 
 void AMyProjectCharacter::Pick()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Voy a coger algo prro \n"));
 	if (canPick && canInteract && interactObject != nullptr)
 	{
 		interactObject->DoPlayerInteraction();

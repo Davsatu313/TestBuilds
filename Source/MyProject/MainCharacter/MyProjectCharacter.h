@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Block.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "MyProjectCharacter.generated.h"
@@ -30,6 +31,8 @@ public:
 	//*Count the times that a timer is called*//
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float timerCalls;
+	UPROPERTY(EditAnywhere)
+		float blockDistanceFromThePlayer;
 	//Set posible can pic up something
 	bool onPause,canInteract;
 	//Set the current time por the pause init
@@ -64,6 +67,8 @@ private:
 	void RestartLevel();
 	//*Interact with some Item*//
 	void Interact();
+	//*Put a block in the map*//
+	void PutBlock();
 	//*Stop interact with some Item*//
 	void StopInteract();
 	//*Pick if can*//
@@ -85,4 +90,9 @@ private:
 	//* Follow camera *//
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* FollowCamera;
+	
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class ABlock> blockToSpawn;
+
+	AActor * currentBlock;
 };
