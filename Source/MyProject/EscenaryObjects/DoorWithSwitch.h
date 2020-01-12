@@ -16,6 +16,8 @@ class MYPROJECT_API ADoorWithSwitch : public AMyDoor
 	GENERATED_BODY()
 private:
 	int numSwitch;
+	
+
 public:
 	ADoorWithSwitch();
 
@@ -24,5 +26,7 @@ public:
 	//to implement future interact with swicht doors
 	void DoPlayerInteraction() override;
 
+
+	virtual void Tick(float DeltaTime) override;
 	
 };

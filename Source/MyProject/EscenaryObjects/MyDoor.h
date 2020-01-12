@@ -20,6 +20,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	class AMyProjectGameMode *gameMode;
+	FVector initialPosition;
 
 public:	
 	// Called every frame

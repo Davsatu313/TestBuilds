@@ -24,7 +24,7 @@ protected:
 
 public:	
 	UFUNCTION()
-	void OnOverlap(AActor * me, AActor * other);
+	virtual void OnOverlap(AActor * me, AActor * other) ;
 
 	UPROPERTY(Editanywhere)
 		class ADoorWithSwitch * myDoor;

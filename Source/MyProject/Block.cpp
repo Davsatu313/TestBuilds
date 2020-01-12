@@ -33,5 +33,11 @@ ABlock::ABlock()
 void ABlock::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("I'M A BLOCK DONT BE RACIST"));
+	OnActorBeginOverlap.AddDynamic(this, &ABlock::OnOverlap);
+}
+
+void ABlock::OnOverlap(AActor * me, AActor * other)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Overlaping something \n"));
+
 }

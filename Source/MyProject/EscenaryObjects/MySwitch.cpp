@@ -17,11 +17,11 @@ AMySwitch::AMySwitch()
 
 void AMySwitch::OnOverlap(AActor * me, AActor * other)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Overlaping something \n"));
 	if (myDoor != nullptr) {
 		myDoor->setActiveSwitch(ON);
 		this->Destroy();
 	}
-
 }
 
 void AMySwitch::BeginPlay()
