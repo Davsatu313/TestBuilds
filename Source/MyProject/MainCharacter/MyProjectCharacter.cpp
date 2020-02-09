@@ -94,6 +94,8 @@ void AMyProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Playe
 	InputComponent->BindAction("PutBlock", IE_Pressed, this, &AMyProjectCharacter::PutBlock);
 
 	InputComponent->BindAction("PickUp", IE_Pressed, this, &AMyProjectCharacter::Interact);
+	InputComponent->BindAction("FixedCamera", IE_Pressed, this, &AMyProjectCharacter::FixedCamera);
+
 	InputComponent->BindAction("PickUp", IE_Released, this, &AMyProjectCharacter::StopInteract);
 	
 }
@@ -111,6 +113,13 @@ void AMyProjectCharacter::BeginPlay()
 	CameraBoom->bAbsoluteLocation = isFixedCamera; //Don't want arm to move, is fixed camera
 	gameMode->angle = cameraAngle;
 	gameMode->distance = cameraLengthToPlayer;	
+	
+	if (isFixedCamera) 
+	{
+		CameraBoom->SetRelativeLocation(GetActorLocation());
+		CameraBoom->bAbsoluteRotation = true;
+	}
+
 }
 
 void AMyProjectCharacter::Tick(float deltaTime)
@@ -127,22 +136,6 @@ void AMyProjectCharacter::Tick(float deltaTime)
 			timerCalls = 0.0f;
 		}
 	}
-	
-	/*if (onPause) {
-		/*currTime += deltaTime;
-		UE_LOG(LogTemp, Warning, TEXT("%f \n"), currTime);
-		
-	if (GetWorld() != nullptr) {
-			UGameplayStatics::SetGamePaused(GetWorld(), onPause);
-		}
-	}
-	
-	if (gameMode->gameState != PLAYING && onPause == false) {
-		onPause = true;
-		UGameplayStatics::SetGamePaused(GetWorld(), onPause);
-	}
-	*/
-	
 }
 
 void AMyProjectCharacter::MoveForward(float Value)
@@ -225,20 +218,30 @@ void AMyProjectCharacter::IncreaseLenght()
 		CameraBoom->TargetArmLength = cameraLengthToPlayer;
 	}
 }
+void AMyProjectCharacter::FixedCamera()
+{
+	isFixedCamera = !isFixedCamera;
+	CameraBoom->SetRelativeLocation(GetActorLocation());
+	
+	if (isFixedCamera) 
+	{	
+		CameraBoom->bAbsoluteLocation = isFixedCamera;
+	}
+	/*else 
+	{
+		CameraBoom->bAbsoluteRotation = true;
+		CameraBoom->bAbsoluteLocation = false; //Don't want arm to move, is fixed camera
+		FollowCamera->bUsePawnControlRotation = false;
+	}*/
+}
 
 void AMyProjectCharacter::RestartLevel()
 {
 	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
 	if (gameMode->actualGameState != PLAYING) {
-		GetWorld()->ServerTravel("/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap");				
+		//GetWorld()->ServerTravel("/Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap");
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), true);
 	}
-
-	//set pause end		
-	/*
-	if (onPause == true) {
-		UGameplayStatics::SetGamePaused(GetWorld(),false);
-		onPause = false;
-	}*/
 }
 
 void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
@@ -249,9 +252,6 @@ void AMyProjectCharacter::OnOverlap(AActor * me, AActor * other)
 		IInteractectable * interacting = Cast<IInteractectable>(other);
 		interactObject = interacting;
 		interacting = nullptr;
-		/*if (myShake != NULL) {
-			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->PlayCameraShake(myShake,1.0f);
-		}*/
 	}
 }
 void AMyProjectCharacter::EndOverlap(AActor * me, AActor * other)
@@ -297,8 +297,9 @@ void AMyProjectCharacter::PutBlock()
 		const FRotator actorRotation = GetActorRotation();
 		const FVector  actorPosition = GetActorLocation();
 		const FVector  forwarVector = GetActorForwardVector() * blockDistanceFromThePlayer;
-		const FVector  blockPosition = actorPosition + forwarVector;
-
+		FVector  blockTentativePosition = actorPosition + forwarVector;
+		blockTentativePosition.Z -= 20;
+		const FVector  blockPosition = blockTentativePosition;
 		if (currentBlock == nullptr)
 		{
 			currentBlock = GetWorld()->SpawnActor<ABlock>(blockToSpawn, blockPosition, actorRotation);
