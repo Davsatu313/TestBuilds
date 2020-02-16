@@ -21,6 +21,10 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+
+	UFUNCTION()
+		void OnOverlap(AActor * me, AActor * other);
+
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* normalBlock;
 
