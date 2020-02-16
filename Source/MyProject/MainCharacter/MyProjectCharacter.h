@@ -63,6 +63,8 @@ private:
 	//* Camera lenght, set the camera distance to the target*//
 	void DecreaseLenght();
 	void IncreaseLenght();
+
+	void FixedCamera();
 	//* Restart game*//
 	void RestartLevel();
 	//*Interact with some Item*//

@@ -19,9 +19,10 @@ AMyDoor::AMyDoor()
 
 // Called when the game starts or when spawned
 void AMyDoor::BeginPlay()
-{
-	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
+{	
 	Super::BeginPlay();
+	gameMode = GetWorld()->GetAuthGameMode<AMyProjectGameMode>();
+	initialPosition = GetActorLocation();
 	
 }
 
