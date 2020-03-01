@@ -19,7 +19,8 @@ void AMySwitch::OnOverlap(AActor * me, AActor * other)
 {
 	if (myDoor != nullptr) {
 		myDoor->setActiveSwitch(ON);
-		this->Destroy();
+		//this->Destroy();
+		bIsActive = true;
 	}
 
 }

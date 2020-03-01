@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 //#include "DoorWithSwitch.h"
 #include "MySwitch.generated.h"
 
 
 
 UCLASS()
-class MYPROJECT_API AMySwitch : public AActor
+class MYPROJECT_API AMySwitch : public APawn
 {
 	GENERATED_BODY()
 	
@@ -28,4 +28,7 @@ public:
 
 	UPROPERTY(Editanywhere)
 		class ADoorWithSwitch * myDoor;
+
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = MySwitch)
+		bool bIsActive;
 };
