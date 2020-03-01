@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Interfaces/Interactectable.h"
 //#include "DoorWithSwitch.h"
 #include "MySwitch.generated.h"
 
 
 
 UCLASS()
-class MYPROJECT_API AMySwitch : public APawn
+class MYPROJECT_API AMySwitch : public APawn, public IInteractectable
 {
 	GENERATED_BODY()
 	
@@ -23,8 +24,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	UFUNCTION()
-	void OnOverlap(AActor * me, AActor * other);
+
+	void DoPlayerInteraction() override;
 
 	UPROPERTY(Editanywhere)
 		class ADoorWithSwitch * myDoor;

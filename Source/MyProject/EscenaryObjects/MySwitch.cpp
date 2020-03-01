@@ -15,25 +15,23 @@ AMySwitch::AMySwitch()
 
 }
 
-void AMySwitch::OnOverlap(AActor * me, AActor * other)
-{
-	if (myDoor != nullptr) {
-		myDoor->setActiveSwitch(ON);
-		//this->Destroy();
-		bIsActive = true;
-	}
-
-}
-
 void AMySwitch::BeginPlay()
 {
 	Super::BeginPlay();
-	OnActorBeginOverlap.AddDynamic(this,&AMySwitch::OnOverlap);
 	if (myDoor != nullptr) {
 		myDoor->setnumSwitch(OFF);
 	}
 	else
 	{
 		this->Destroy();
+	}
+}
+
+void AMySwitch::DoPlayerInteraction()
+{
+	if (myDoor != nullptr) {
+		myDoor->setActiveSwitch(ON);
+		//this->Destroy();
+		bIsActive = true;
 	}
 }
