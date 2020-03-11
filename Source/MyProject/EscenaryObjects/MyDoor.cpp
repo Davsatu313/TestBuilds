@@ -29,6 +29,7 @@ void AMyDoor::BeginPlay()
 void AMyDoor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	/*
 	FVector actual = GetActorLocation();
 	if (move) {
 		AddActorLocalOffset(FVector(0,0, downVelocity)*DeltaTime);
@@ -37,13 +38,13 @@ void AMyDoor::Tick(float DeltaTime)
 		UE_LOG(LogTemp, Warning, TEXT("Deleting A Door \n"));
 		this->Destroy();
 	}
-
+	*/
 }
 
 void AMyDoor::DoPlayerInteraction()
 {
 	/*Mover la puerta */
-	move = true;
+	bIsActive = true;
 	UE_LOG(LogTemp, Warning, TEXT("Opening A Door \n"));
 	
 }

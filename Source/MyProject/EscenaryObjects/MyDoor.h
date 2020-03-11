@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "Interfaces/Interactectable.h"
 #include "MyDoor.generated.h"
 
 UCLASS()
-class MYPROJECT_API AMyDoor : public AActor, public IInteractectable
+class MYPROJECT_API AMyDoor : public APawn, public IInteractectable
 {
 	GENERATED_BODY()
 	
@@ -33,6 +33,9 @@ public:
 		float deletePosition;
 
 	bool move;
+
+	UPROPERTY(Editanywhere, BlueprintReadWrite, Category = MyDoor)
+		bool bIsActive;
 private:
 	
 
